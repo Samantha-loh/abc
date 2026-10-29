@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Clive Hercules Tan - Earth & Country Quiz Game</title>
+  <meta name="description" content="A joyful country, continent, and ocean quiz game created especially for Clive Hercules Tan, featuring fun facts, cheering sounds, cartoon country characters, and confetti!">
+  
+  <!-- Google Fonts: Fredoka & Bubblegum Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Starry Space & Sky Background -->
+  <div class="sky-container" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="clouds-bottom"></div>
+  </div>
+
+  <!-- Confetti Celebration Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Top App Navigation / Audio Bar -->
+  <header class="app-header">
+    <div class="brand-badge">
+      <span class="brand-logo-icon">🌍</span>
+      <span>Clive's Earth Quiz</span>
+    </div>
+
+    <div class="controls-group">
+      <!-- Voice Narrator Toggle -->
+      <button id="btn-voice-toggle" class="icon-btn active" title="Toggle Voice Read Aloud" aria-label="Toggle Voice Read Aloud">
+        🗣️
+      </button>
+      <!-- Sound FX Toggle -->
+      <button id="btn-sound-toggle" class="icon-btn active" title="Toggle Sound Effects" aria-label="Toggle Sound Effects">
+        🔊
+      </button>
+      <!-- Home Button -->
+      <button id="btn-home" class="icon-btn" title="Go to Main Menu" aria-label="Go to Main Menu">
+        🏠
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- ==========================================
+         SCREEN 1: WELCOME & LEVEL SELECT
+         ========================================== -->
+    <section id="screen-welcome" class="view-screen active">
+      <div class="welcome-hero">
+        
+        <!-- Speech Bubble Greeting for Clive -->
+        <div class="speech-bubble">
+          <p class="greeting-text">
+            “Hi <span class="greeting-highlight">Clive Hercules Tan</span>, let's see how much you know about our Earth home’s countries, land and seas.”
+          </p>
+          <button id="btn-read-greeting" class="read-speech-btn">
+            <span>🔊</span> Listen to Greeting
+          </button>
+        </div>
+
+        <!-- Mascot Character Slot -->
+        <div class="character-stage" id="welcome-mascot-slot">
+          <!-- Populated by JavaScript with cute smiling Earth -->
+        </div>
+
+        <!-- Level Selector Section -->
+        <h2 class="level-select-title">✨ Pick Your Adventure Level ✨</h2>
+        
+        <div class="levels-grid">
+          <!-- Easy Level -->
+          <div class="level-card easy" data-level="easy" id="card-level-easy">
+            <div class="level-icon">🌱</div>
+            <h3 class="level-name">Easy Explorer</h3>
+            <span class="level-badge-tag">10 Questions</span>
+            <p class="level-desc">Continents, oceans, famous lands & animals! Perfect for quick fun!</p>
+          </div>
+
+          <!-- Medium Level -->
+          <div class="level-card medium" data-level="medium" id="card-level-medium">
+            <div class="level-icon">🚀</div>
+            <h3 class="level-name">Medium Adventurer</h3>
+            <span class="level-badge-tag">25 Questions</span>
+            <p class="level-desc">Exciting country shapes, landmarks, capitals, and island secrets!</p>
+          </div>
+
+          <!-- Advanced Level -->
+          <div class="level-card advanced" data-level="advanced" id="card-level-advanced">
+            <div class="level-icon">👑</div>
+            <h3 class="level-name">Advanced Master</h3>
+            <span class="level-badge-tag">50 Questions</span>
+            <p class="level-desc">Ultimate geography trivia for a super YouTube geography champion!</p>
+          </div>
+        </div>
+
+        <!-- Bonus Games Strip (Homage to Dan's Countries) -->
+        <div class="bonus-strip">
+          <button id="btn-bonus-map" class="btn-bonus">
+            <span>🗺️</span> Bonus Game: Continent Explorer!
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+         SCREEN 2: QUIZ GAMEPLAY
+         ========================================== -->
+    <section id="screen-quiz" class="view-screen">
+      
+      <!-- Top Status & Progress Bar -->
+      <div class="quiz-top-bar">
+        <div class="progress-info">
+          <span id="progress-label">Question 1 of 10</span>
+        </div>
+        
+        <div class="progress-track-wrapper">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="score-star-pill" id="score-stars">
+          ⭐ 0
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="question-card">
+        
+        <!-- Category Badge -->
+        <div class="question-badge" id="badge-category">
+          🌍 Continents
+        </div>
+
+        <!-- Animated Cartoon Character Slot -->
+        <div class="character-display-area" id="character-slot">
+          <!-- Dynamic SVG character rendered here -->
+        </div>
+
+        <!-- Question Header with Speaker Button -->
+        <div class="question-text-row">
+          <h2 class="question-title" id="question-text">
+            How many continents are there on planet Earth?
+          </h2>
+          <button id="btn-speak-question" class="speaker-btn" title="Listen to question" aria-label="Listen to question">
+            🔊
+          </button>
+        </div>
+
+        <!-- 4 Option Buttons -->
+        <div class="options-grid" id="options-grid">
+          <!-- Dynamically populated option buttons -->
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+         SCREEN 3: GRAND FINAL CONGRATULATIONS
+         ========================================== -->
+    <section id="screen-finale" class="view-screen">
+      <div class="finale-card">
+        
+        <div class="trophy-badge">🏆</div>
+        <h1 class="finale-title">Grand Congratulations!</h1>
+        <p class="finale-subtitle">You are a True Planet Earth Superstar!</p>
+
+        <!-- Official Personalized Explorer Certificate -->
+        <div class="certificate-frame">
+          <div class="cert-stamp">🌟 Earth Explorer Honor Roll 🌟</div>
+          <div class="cert-name">Clive Hercules Tan</div>
+          <p class="cert-body">
+            You have explored the continents, oceans, and countries of our world with great curiosity and brilliance! Planet Earth is proud of you!
+          </p>
+        </div>
+
+        <!-- Score Summary -->
+        <div class="score-summary-bar">
+          <div class="stat-box">
+            <span class="stat-value" id="final-score">10</span>
+            <span class="stat-label">Correct Answers</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value" id="final-total">10</span>
+            <span class="stat-label">Total Questions</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-value" id="final-stars-count">⭐ 10</span>
+            <span class="stat-label">Stars Earned</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="finale-actions-row">
+          <button id="btn-play-again" class="btn-primary">
+            <span>🔄</span> Play Again
+          </button>
+          <button id="btn-choose-level" class="btn-secondary">
+            <span>🚀</span> Change Level
+          </button>
+          <button id="btn-finale-bonus-map" class="btn-bonus">
+            <span>🗺️</span> Continent Explorer
+          </button>
+          <button id="btn-print-cert" class="btn-bonus">
+            <span>🖨️</span> Save Certificate
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ==========================================
+       MODAL 1: FUN FACT CARD (After every answer)
+       ========================================== -->
+  <div id="fact-modal" class="modal-overlay">
+    <div class="fact-modal-card">
+      <div class="fact-badge">
+        <span>💡</span> Fun Fact for Clive!
+      </div>
+      
+      <div id="fact-result-banner" class="fact-result-banner correct">
+        🌟 Hooray, Clive! That's Right! 🎉
+      </div>
+
+      <div class="fact-char-slot" id="fact-char-slot">
+        <!-- Cute illustration slot -->
+      </div>
+
+      <p class="fact-text" id="fact-text">
+        Loading fun fact...
+      </p>
+
+      <button id="btn-fact-next" class="fact-next-btn">
+        <span>Next Question</span> <span>➡️</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       MODAL 2: CONTINENT EXPLORER (Bonus Map)
+       ========================================== -->
+  <div id="map-modal" class="modal-overlay">
+    <div class="map-modal-card">
+      <div class="map-modal-header">
+        <h2 class="map-modal-title">🌍 Continent & Ocean Explorer</h2>
+        <button id="btn-close-map-modal" class="close-btn" aria-label="Close Explorer">✕</button>
+      </div>
+
+      <p style="color: #94A3B8; font-weight: 600;">Tap any continent or ocean to hear its secret facts!</p>
+
+      <div class="continent-cards-grid" id="continent-grid">
+        <!-- Populated by JavaScript -->
+      </div>
+
+      <div class="map-info-bubble" id="map-fact-bubble">
+        Tap any continent or ocean above to hear fun facts!
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Modules -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
